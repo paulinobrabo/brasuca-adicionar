@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brasuca Bot - Painel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #0f0;
+      text-align: center;
+      padding: 40px;
+    }
+    .logo {
+      width: 150px;
+      height: auto;
+      border-radius: 15px;
+    }
+    .container {
+      background: #111;
+      color: #0f0;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0,255,0,0.2);
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      margin: 15px 0;
+      border: 1px solid #0f0;
+      border-radius: 5px;
+      background: #222;
+      color: #0f0;
+    }
+    button {
+      background: #0f0;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #3f3;
+    }
+    h2 {
+      color: #0f0;
+      margin-top: 40px;
+    }
+    ol {
+      text-align: left;
+      margin: 0 auto;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="brasuca_logo.jpg" alt="Brasuca Bot Logo" class="logo" />
+    <h1>Brasuca Bot</h1>
+    <p>Cadastre o link de um canal do YouTube para monitorar vídeos automaticamente no seu Discord.</p>
+    <input type="text" id="ytLink" placeholder="Cole o link do canal do YouTube" />
+    <br />
+    <button onclick="salvarLink()">Salvar</button>
+    <p id="mensagem"></p>
+
+    <h2>📌 Como configurar o envio automático</h2>
+    <ol>
+      <li>Acesse: <a href="https://ifttt.com/create" target="_blank">https://ifttt.com/create</a></li>
+      <li>Clique em <b>If This</b> e escolha <b>YouTube</b></li>
+      <li>Selecione <b>New public video uploaded by a channel</b></li>
+      <li>Cole o link do canal do YouTube desejado</li>
+      <li>Depois clique em <b>Then That</b> e selecione <b>Webhooks</b></li>
+      <li>Escolha <b>Make a web request</b> e preencha:
+        <ul>
+          <li><b>URL:</b> Webhook do seu canal do Discord</li>
+          <li><b>Method:</b> POST</li>
+          <li><b>Content Type:</b> application/json</li>
+          <li><b>Body:</b></li>
+        </ul>
+        <pre style="text-align:left; background:#222; padding:10px; border-radius:8px; color:#0f0;">
+{
+  "content": "📢 Novo vídeo no canal!\\n📺 **{{Title}}**\\n🔗 {{Url}}"
+}
+        </pre>
+      </li>
+      <li>Salve a automação e pronto!</li>
+    </ol>
+  </div>
+
+  <script>
+    function salvarLink() {
+      const link = document.getElementById("ytLink").value;
+      if (!link.startsWith("https://www.youtube.com/")) {
+        document.getElementById("mensagem").innerText = "❌ Link inválido. Insira um link do YouTube.";
+        return;
+      }
+      document.getElementById("mensagem").innerText = "✅ Link salvo localmente (fictício): " + link;
+    }
+  </script>
+</body>
+</html>
